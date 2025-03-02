@@ -1,7 +1,12 @@
-import "./App.css";
+import AppLayout from "./components/AppLayout/AppLayout";
+import MainForm from "./components/MainForm/MainForm";
 
 function App() {
-  return <div className="border-2 border-red-500">Hello Flow Mo!</div>;
+  return (
+    <AppLayout>
+      <MainForm />
+    </AppLayout>
+  );
 }
 
 export default App;
