@@ -12,7 +12,7 @@ export default function LanguageOptions({
   setSelectedLanguage,
 }: LanguageOptionsProps) {
   return (
-    <div className="absolute top-[50px] left-0 flex flex-col text-xl drop-shadow-md w-[200px] rounded-sm mt-1 bg-white ">
+    <div className="absolute top-[50px] left-0 flex flex-col text-xl drop-shadow-md w-[200px] rounded-sm mt-1 bg-white z-50">
       {languages.map((language) => (
         <button
           type="button"

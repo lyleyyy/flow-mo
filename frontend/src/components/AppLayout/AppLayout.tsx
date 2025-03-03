@@ -5,5 +5,9 @@ interface AppLayoutProps {
 }
 
 export default function AppLayout({ children }: AppLayoutProps) {
-  return <div className="w-full h-screen ">{children}</div>;
+  return (
+    <div className="w-full h-screen flex flex-col items-center bg-black">
+      {children}
+    </div>
+  );
 }
