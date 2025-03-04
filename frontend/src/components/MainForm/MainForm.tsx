@@ -6,18 +6,20 @@ import FormatSelector from "../FormatSelector/FormatSelector";
 
 export default function MainForm() {
   return (
-    <form className="flex flex-col items-center gap-4 bg-zinc-900 p-4">
-      <SelectorContainer>
-        <LanguageSelector defaultLanguageCode="en" />
-        <LuArrowLeftRight className="text-3xl text-zinc-400" />
-        <LanguageSelector defaultLanguageCode="fr" />
-      </SelectorContainer>
+    <form className="flex flex-col items-center gap-12 bg-zinc-900 p-8">
+      <div className="space-y-4">
+        <SelectorContainer>
+          <LanguageSelector defaultLanguageCode="en" />
+          <LuArrowLeftRight className="text-3xl text-zinc-400" />
+          <LanguageSelector defaultLanguageCode="fr" />
+        </SelectorContainer>
 
-      <SelectorContainer>
-        <FormatSelector defaultFormat="docx" />
-        <LuArrowLeftRight className="text-3xl text-zinc-400" />
-        <FormatSelector defaultFormat="pdf" />
-      </SelectorContainer>
+        <SelectorContainer>
+          <FormatSelector defaultFormat="docx" />
+          <LuArrowLeftRight className="text-3xl text-zinc-400" />
+          <FormatSelector defaultFormat="pdf" />
+        </SelectorContainer>
+      </div>
 
       <DragAndDrop />
 
