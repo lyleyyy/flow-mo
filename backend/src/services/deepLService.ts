@@ -1,7 +1,7 @@
 import * as deepl from "deepl-node";
 import * as fs from "fs";
 
-const authKey = "df3012ad-49af-4b68-be45-5a7cf6b743c4:fx";
+const authKey = process.env.DEEPL_AUTH_KEY as string;
 const translator = new deepl.Translator(authKey);
 
 export async function translateFile() {
