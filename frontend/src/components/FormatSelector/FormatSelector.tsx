@@ -17,13 +17,13 @@ export default function FormatSelector({ defaultFormat }: FormatSelectorProps) {
   )?.name;
 
   return (
-    <button
-      type="button"
+    <div
       className={`bg-zinc-100 w-[200px] h-[50px] rounded-sm flex items-center justify-between px-4 relative hover:bg-zinc-200 ${
         isOptionsOpen && "bg-zinc-200"
       }`}
       onClick={() => setIsOptionsOpen((isOpen) => !isOpen)}
     >
+      <input name="formats" value={selectedFormat} hidden readOnly />
       <div className="flex items-center text-xl gap-2">
         <span className="w-[30px] h-[30px]">
           <FileIcon
@@ -41,6 +41,6 @@ export default function FormatSelector({ defaultFormat }: FormatSelectorProps) {
           setSelectedFormat={setSelectedFormat}
         />
       )}
-    </button>
+    </div>
   );
 }

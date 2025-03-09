@@ -14,9 +14,9 @@ export default function FormatOptions({
   return (
     <div className="absolute top-[50px] left-0 flex flex-col text-xl drop-shadow-md w-[200px] rounded-sm mt-1 bg-white z-50">
       {fileFormats.map((fileFormat) => (
-        <button
-          type="button"
-          className="flex w-full h-[50px] items-center justify-between px-4"
+        <div
+          key={fileFormat.extension}
+          className="flex w-full h-[50px] items-center justify-between px-4 hover:bg-zinc-200 rounded-sm"
           onClick={() => setSelectedFormat(fileFormat.extension)}
         >
           <div className="flex gap-2">
@@ -29,7 +29,7 @@ export default function FormatOptions({
             <span>{fileFormat.name}</span>
           </div>
           {selectedFormat === fileFormat.extension && <FcCheckmark />}
-        </button>
+        </div>
       ))}
     </div>
   );

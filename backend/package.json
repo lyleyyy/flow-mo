@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@types/cors": "^2.8.17",
+    "cors": "^2.8.5",
+    "deepl-node": "^1.17.2",
     "express": "^4.21.2"
   },
   "scripts": {

@@ -20,13 +20,13 @@ export default function LanguageSelector({
   )?.name;
 
   return (
-    <button
-      type="button"
+    <div
       className={`bg-zinc-100 w-[200px] h-[50px] rounded-sm flex items-center justify-between px-4 relative hover:bg-zinc-200 ${
         isOptionsOpen && "bg-zinc-200"
       }`}
       onClick={() => setIsOptionsOpen((isOpen) => !isOpen)}
     >
+      <input name="languages" value={selectedLanguage} hidden readOnly />
       <div className="flex items-center text-xl gap-2">
         <CircleFlagLanguage
           languageCode={selectedLanguage}
@@ -41,6 +41,6 @@ export default function LanguageSelector({
           setSelectedLanguage={setSelectedLanguage}
         />
       )}
-    </button>
+    </div>
   );
 }
