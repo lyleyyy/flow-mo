@@ -29,7 +29,7 @@ export default function DragAndDrop() {
       className="w-4/5 h-[400px] bg-white rounded-sm flex flex-col justify-center items-center p-8 text-center gap-4 hover:bg-zinc-100"
       {...getRootProps()}
     >
-      <input name="file" {...getInputProps()} />
+      <input type="file" name="file" {...getInputProps()} />
       <FaPlus className="text-6xl text-zinc-300" />
       {currentFile && <p>{currentFile.name}</p>}
       {!currentFile && (
