@@ -59,7 +59,7 @@ export default function MainForm() {
         <SelectorContainer>
           <LanguageSelector defaultLanguageCode="en" />
           <LuArrowLeftRight className="text-3xl text-zinc-400" />
-          <LanguageSelector defaultLanguageCode="fr" />
+          <LanguageSelector defaultLanguageCode="es" />
         </SelectorContainer>
 
         <SelectorContainer>

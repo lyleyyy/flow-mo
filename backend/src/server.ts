@@ -18,9 +18,9 @@ app.get("/", (req: Request, res: Response) => {
 app.post(
   "/api/translate&convert",
   upload.single("file"),
-  (req: Request, res: Response) => {
-    console.log(req.body);
-    // console.log(req.file);
+  async (req: Request, res: Response) => {
+    // console.log(req.body);
+    // console.log(req.file, "!!!!!!");
 
     try {
       if (!req.file) throw new Error("No File Uploaded");
@@ -28,8 +28,15 @@ app.post(
       const fileBuffer = req.file.buffer;
       const sourceLang = req.body.languages[0];
       const targetLang = req.body.languages[1];
-      translateFile(fileBuffer, sourceLang, targetLang);
-      res.json({ messag: "post req success", data: req.body });
+      const fileName = req.file.originalname;
+      const result = await translateFile(
+        fileBuffer,
+        sourceLang,
+        targetLang,
+        fileName
+      );
+
+      res.json({ messag: "post req success", data: req.body, result });
     } catch (error) {
       console.error("Translate and Convert Error" + error);
     }
