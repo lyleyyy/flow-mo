@@ -29,7 +29,7 @@ export async function translateFile(
   // console.log(outputFilePath, "outputFilePath");
 
   const outputWriteStream = fs.createWriteStream(outputFilePath);
-  const result = await translator.translateDocument(
+  const status = await translator.translateDocument(
     fileBuffer,
     outputWriteStream,
     sourceLang as deepl.SourceLanguageCode,
@@ -37,7 +37,13 @@ export async function translateFile(
     { filename: fileName }
   );
 
-  return result;
+  if (status.status === "done") {
+    console.log("Translation completed successfully!");
+    await fs.promises.access(outputFilePath);
+    console.log("Output file exists and translation is done.");
+  } else {
+    console.log(`Translation status: ${status.status}`);
+  }
 }
 
 export async function checkFileStatus() {}

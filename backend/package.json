@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/cors": "^2.8.17",
     "@types/multer": "^1.4.12",
+    "cloudconvert": "^2.3.7",
     "cors": "^2.8.5",
     "deepl-node": "^1.17.2",
     "dotenv": "^16.4.7",
