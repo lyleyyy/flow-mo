@@ -2,6 +2,9 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { translateFile } from "./services/deepLService";
 import multer from "multer";
+import * as fs from "fs";
+import { covertTranslatedFile } from "./services/cloudConvertService";
+import axios from "axios";
 
 const app = express();
 app.use(cors());
@@ -29,16 +32,52 @@ app.post(
       const sourceLang = req.body.languages[0];
       const targetLang = req.body.languages[1];
       const fileName = req.file.originalname;
-      const result = await translateFile(
-        fileBuffer,
-        sourceLang,
-        targetLang,
-        fileName
+      // const translatedFileBuffer = await translateFile(
+      //   fileBuffer,
+      //   sourceLang,
+      //   targetLang,
+      //   fileName
+      // );
+
+      // console.log(translatedFileBuffer, "translatedFileBuffer!!!!");
+
+      // const filePath =
+      //   "/Users/lyle/Development/flow-mo/backend/src/services/translated-files/Doc1-translatedByFlowMo.docx";
+
+      // if (!fs.existsSync(filePath)) {
+      //   console.error("File does not exist:", filePath);
+      // } else {
+      //   console.log("?????????");
+      //   try {
+      //     const translatedFileBuffer = fs.readFileSync(filePath);
+      //     console.log("File successfully read:", translatedFileBuffer);
+      //     console.log(
+      //       "File content as Base64:",
+      //       translatedFileBuffer.toString("base64")
+      //     );
+      //   } catch (error) {
+      //     console.error("Error reading the file:", error);
+      //   }
+      // }
+
+      const translatedFileBuffer = fs.readFileSync(
+        "/Users/lyle/Development/flow-mo/backend/src/services/translated-files/Doc1-translatedByFlowMo.docx"
       );
 
-      res.json({ messag: "post req success", data: req.body, result });
+      await covertTranslatedFile(
+        translatedFileBuffer,
+        "Doc1-translatedByFlowMo.docx"
+      );
+
+      res.json({ messag: "translate and covert request success" });
     } catch (error) {
       console.error("Translate and Convert Error" + error);
+
+      if (axios.isAxiosError(error)) {
+        console.error("Status:", error.response?.status);
+        console.error("Data:", error.response?.data);
+        console.error("Headers:", error.response?.headers);
+      }
     }
   }
 );

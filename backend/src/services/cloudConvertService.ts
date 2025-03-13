@@ -1,28 +1,56 @@
 import dotenv from "dotenv";
 import CloudConvert from "cloudconvert";
+import * as fs from "fs";
+import * as http from "http";
 
 dotenv.config();
-const cloudConvert = new CloudConvert(
+const cloudconvert = new CloudConvert(
   process.env.CLOUD_CONVERT_API_KEY as string
 );
 
-export async function covertDoc() {
-  let job = await cloudConvert.jobs.create({
+export async function covertTranslatedFile(
+  translatedFileBuffer: Buffer,
+  fileName: string
+) {
+  // console.log(translatedFileBuffer, "translatedFileBuffer???!!");
+  // console.log(
+  //   translatedFileBuffer.toString("base64").slice(0, 10),
+  //   "waya??????"
+  // );
+
+  let job = await cloudconvert.jobs.create({
     tasks: {
-      "import-my-file": {
-        operation: "import/url",
-        url: "https://my-url",
+      "import-file": {
+        operation: "import/raw",
+        file: translatedFileBuffer.toString("base64"),
+        filename: fileName,
       },
-      "convert-my-file": {
+      "task-convert": {
         operation: "convert",
-        input: "import-my-file",
+        input: "import-file",
         output_format: "pdf",
-        some_other_option: "value",
       },
-      "export-my-file": {
+      "export-file": {
         operation: "export/url",
-        input: "convert-my-file",
+        input: "task-convert",
+        inline: false,
+        archive_multiple_files: false,
       },
     },
+  });
+
+  console.log(job, "jobbbbb");
+  const file = cloudconvert.jobs.getExportUrls(job)[0];
+  console.log(file, "what the h????");
+
+  const writeStream = fs.createWriteStream("./out/" + file.filename);
+
+  http.get(file.url as string, function (response) {
+    response.pipe(writeStream);
+  });
+
+  await new Promise((resolve, reject) => {
+    writeStream.on("finish", () => resolve(undefined));
+    writeStream.on("error", reject);
   });
 }

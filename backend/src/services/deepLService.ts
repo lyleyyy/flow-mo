@@ -41,11 +41,13 @@ export async function translateFile(
     console.log("Translation completed successfully!");
     await fs.promises.access(outputFilePath);
     console.log("Output file exists and translation is done.");
+
+    return fs.readFileSync(outputFilePath);
   } else {
     console.log(`Translation status: ${status.status}`);
   }
 }
 
-export async function checkFileStatus() {}
+// export async function checkFileStatus() {}
 
-export async function downloadFile() {}
+// export async function downloadFile() {}
