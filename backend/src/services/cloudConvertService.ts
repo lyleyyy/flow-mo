@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import CloudConvert from "cloudconvert";
 import * as fs from "fs";
-import * as http from "http";
+import * as https from "https";
 
 dotenv.config();
 const cloudconvert = new CloudConvert(
@@ -21,13 +21,14 @@ export async function covertTranslatedFile(
   let job = await cloudconvert.jobs.create({
     tasks: {
       "import-file": {
-        operation: "import/raw",
+        operation: "import/base64",
         file: translatedFileBuffer.toString("base64"),
         filename: fileName,
       },
       "task-convert": {
         operation: "convert",
         input: "import-file",
+        input_format: "docx",
         output_format: "pdf",
       },
       "export-file": {
@@ -39,13 +40,20 @@ export async function covertTranslatedFile(
     },
   });
 
-  console.log(job, "jobbbbb");
+  console.log(translatedFileBuffer.toString("base64"));
+  // console.log(job, "jobbbbb");
+  job = await cloudconvert.jobs.wait(job.id);
+  console.log(job, "jobbbbb copy awiat");
+
+  console.log(cloudconvert.jobs, "cloudconvert.jobs");
   const file = cloudconvert.jobs.getExportUrls(job)[0];
   console.log(file, "what the h????");
 
-  const writeStream = fs.createWriteStream("./out/" + file.filename);
+  const writeStream = fs.createWriteStream(
+    "/Users/lyle/Downloads" + file.filename
+  );
 
-  http.get(file.url as string, function (response) {
+  https.get(file.url as string, function (response) {
     response.pipe(writeStream);
   });
 
